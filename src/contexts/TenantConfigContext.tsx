@@ -68,8 +68,9 @@ export const TenantConfigProvider: React.FC<TenantConfigProviderProps> = ({ chil
       const cachedConfig = await apiService.getCachedTenantConfig()
       if (cachedConfig) {
         setConfig(cachedConfig)
-        setIsLoaded(true)
       }
+      // Always mark as loaded even on error to prevent infinite splash
+      setIsLoaded(true)
     } finally {
       setIsLoading(false)
     }

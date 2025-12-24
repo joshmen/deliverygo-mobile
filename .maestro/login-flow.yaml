@@ -1,0 +1,39 @@
+appId: com.deliverygoexpress.app
+---
+# DeliveryGo Login Flow Test
+
+- launchApp:
+    clearState: true
+
+# Wait for splash screen to finish
+- extendedWaitUntil:
+    visible: "Welcome to"
+    timeout: 30000
+
+- assertVisible: "Sign In"
+
+# Test empty credentials validation
+- tapOn:
+    id: "login-button"
+- assertVisible: "Please enter both email and password"
+- tapOn: "OK"
+
+# Enter valid customer credentials
+- tapOn:
+    id: "email-input"
+- inputText: "customer@demo-restaurant.com"
+
+- tapOn:
+    id: "password-input"
+- inputText: "Customer123!"
+
+# Submit login
+- tapOn:
+    id: "login-button"
+
+# Wait for navigation to home screen (Tiendas/Stores)
+- extendedWaitUntil:
+    visible: "Tiendas"
+    timeout: 15000
+
+- assertVisible: "Tiendas"
