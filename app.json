@@ -31,7 +31,9 @@
       },
       "permissions": [
         "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION"
+        "ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ]
     },
     "web": {
@@ -49,7 +51,10 @@
       "expo-asset"
     ],
     "extra": {
-      "eas": {}
-    }
+      "eas": {
+        "projectId": "0587711d-58d8-43e0-b504-d0f5de455720"
+      }
+    },
+    "owner": "xjoshmenx"
   }
 }
