@@ -49,3 +49,4 @@ yarn-error.*
 # Test artifacts
 *.bat
 test-output.txt
+.env
