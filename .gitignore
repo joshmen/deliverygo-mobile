@@ -39,3 +39,13 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Build artifacts
+*.apk
+
+# Screenshots and images
+*.png
+
+# Test artifacts
+*.bat
+test-output.txt
