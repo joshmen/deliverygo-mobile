@@ -1,0 +1,71 @@
+appId: host.exp.exponent
+---
+# DeliveryGo Driver Login Flow Test (Expo Go)
+# Assumes StoreOwner test ran first and user is logged in
+
+# Launch Expo Go
+- launchApp:
+    clearState: false
+
+# Dismiss Samsung Pass popup if visible (use back)
+- pressKey: back
+
+# Tap on DeliveryGo project
+- tapOn: "DeliveryGo Express"
+
+# Wait for app, dismiss Samsung Pass again
+- swipe:
+    direction: DOWN
+    duration: 500
+- pressKey: back
+
+# Wait for Dashboard - any logged in state
+- extendedWaitUntil:
+    visible: "Profile"
+    timeout: 60000
+
+# Go to Profile and logout
+- tapOn: "Profile"
+# Scroll down to find Logout button
+- scrollUntilVisible:
+    element: "Logout"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Logout"
+- extendedWaitUntil:
+    visible: "LOGOUT"
+    timeout: 5000
+- tapOn: "LOGOUT"
+
+# Skip onboarding
+- extendedWaitUntil:
+    visible: "Skip"
+    timeout: 15000
+- tapOn: "Skip"
+
+# Login as Driver
+- extendedWaitUntil:
+    visible: "Sign In"
+    timeout: 15000
+- tapOn:
+    id: "email-input"
+- inputText: "driver@demo-restaurant.com"
+- tapOn:
+    id: "password-input"
+- inputText: "Driver123!"
+- tapOn:
+    id: "login-button"
+
+# Dismiss Samsung Pass
+- swipe:
+    direction: DOWN
+    duration: 1000
+- pressKey: back
+
+# Verify Driver dashboard
+- extendedWaitUntil:
+    visible: "deliveries"
+    timeout: 30000
+- assertVisible: "Profile"
+
+# Driver test passed!

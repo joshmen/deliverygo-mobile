@@ -1,0 +1,9 @@
+# Maestro Test Suite Configuration for DeliveryGo
+# Run all tests with: maestro test .maestro/
+
+# Flow files to execute in order
+flows:
+  - expo-go-login.yaml      # StoreOwner login
+  - 02-driver-login.yaml    # Driver login
+  - 03-customer-login.yaml  # Customer login
+  - 04-login-validations.yaml  # Form validations

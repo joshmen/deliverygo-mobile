@@ -1,0 +1,78 @@
+appId: host.exp.exponent
+---
+# DeliveryGo - Login Validation Tests
+# Tests: Empty fields, invalid credentials, forgot password link
+
+# Launch Expo Go with fresh state
+- launchApp:
+    clearState: true
+
+# Wait for onboarding
+- extendedWaitUntil:
+    visible: "All your favorites"
+    timeout: 60000
+
+# Skip onboarding
+- tapOn: "Skip"
+
+# Wait for login screen
+- extendedWaitUntil:
+    visible: "Sign In"
+    timeout: 10000
+
+# === TEST 1: Empty credentials ===
+- tapOn:
+    id: "login-button"
+
+- assertVisible: "Please enter both email and password"
+- tapOn: "OK"
+
+# === TEST 2: Email only (no password) ===
+- tapOn:
+    id: "email-input"
+- inputText: "test@example.com"
+
+- tapOn:
+    id: "login-button"
+
+- assertVisible: "Please enter both email and password"
+- tapOn: "OK"
+
+# Clear email field
+- tapOn:
+    id: "email-input"
+- eraseText: 20
+
+# === TEST 3: Password only (no email) ===
+- tapOn:
+    id: "password-input"
+- inputText: "TestPassword123"
+
+- tapOn:
+    id: "login-button"
+
+- assertVisible: "Please enter both email and password"
+- tapOn: "OK"
+
+# === TEST 4: Invalid credentials ===
+- tapOn:
+    id: "email-input"
+- inputText: "invalid@test.com"
+
+- tapOn:
+    id: "login-button"
+
+- extendedWaitUntil:
+    visible: "Login Failed"
+    timeout: 15000
+
+- assertVisible: "Invalid email or password"
+- tapOn: "OK"
+
+# === TEST 5: Verify Forgot Password link exists ===
+- assertVisible: "Forgot Password"
+
+# === TEST 6: Verify Sign Up link exists ===
+- assertVisible: "Sign Up"
+
+# All validation tests passed!

@@ -61,7 +61,13 @@ apiClient.interceptors.response.use(
  * Login user
  */
 export const login = async (credentials: LoginRequest): Promise<LoginResponse> => {
-  const response = await apiClient.post<LoginResponse>(ENDPOINTS.auth.login, credentials)
+  // Backend expects PascalCase property names
+  const requestBody = {
+    Email: credentials.email,
+    Password: credentials.password,
+    TenantCode: credentials.tenantCode
+  }
+  const response = await apiClient.post<LoginResponse>(ENDPOINTS.auth.login, requestBody)
 
   // Store token and user data
   await AsyncStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, response.data.accessToken)

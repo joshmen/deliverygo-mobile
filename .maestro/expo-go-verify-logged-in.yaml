@@ -1,0 +1,41 @@
+appId: host.exp.exponent
+---
+# DeliveryGo - Verify Logged In State (Expo Go)
+# This test verifies the app is working when already logged in
+
+# Launch Expo Go (project should already be loaded)
+- launchApp:
+    clearState: false
+
+# Wait for dashboard to load
+- extendedWaitUntil:
+    visible: "Orders Dashboard"
+    timeout: 30000
+
+# Verify StoreOwner dashboard elements
+- assertVisible: "Orders Dashboard"
+- assertVisible: "Pending Orders"
+- assertVisible: "Active Orders"
+
+# Verify bottom navigation
+- assertVisible: "Orders"
+- assertVisible: "Settings"
+- assertVisible: "Profile"
+
+# Navigate to Settings
+- tapOn: "Settings"
+- extendedWaitUntil:
+    visible: "Store Settings"
+    timeout: 5000
+
+# Navigate to Profile
+- tapOn: "Profile"
+- extendedWaitUntil:
+    visible: "Account"
+    timeout: 5000
+
+# Return to Orders
+- tapOn: "Orders"
+- assertVisible: "Orders Dashboard"
+
+# Test completed - app is fully functional!

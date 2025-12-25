@@ -1,0 +1,39 @@
+appId: host.exp.exponent
+---
+# DeliveryGo - Logout Test
+# Tests logout from any authenticated state
+
+# Launch Expo Go
+- launchApp:
+    clearState: false
+
+# Wait for app to load - could be dashboard or login
+- extendedWaitUntil:
+    visible: "Profile"
+    timeout: 30000
+
+# Navigate to Profile (should be visible in bottom tabs)
+- tapOn: "Profile"
+
+- extendedWaitUntil:
+    visible: "Account"
+    timeout: 10000
+
+# Find and tap logout button
+- scrollUntilVisible:
+    element: "Log Out"
+    direction: DOWN
+    timeout: 10000
+
+- tapOn: "Log Out"
+
+# Verify we're back at login
+- extendedWaitUntil:
+    visible: "Sign In"
+    timeout: 10000
+
+- assertVisible: "Sign In"
+- assertVisible: "Email"
+- assertVisible: "Password"
+
+# Logout test completed!

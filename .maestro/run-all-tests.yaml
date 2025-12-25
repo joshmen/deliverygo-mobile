@@ -1,0 +1,16 @@
+appId: host.exp.exponent
+---
+# DeliveryGo - Master Test Suite Runner
+# Runs all E2E tests in sequence
+
+# Clear app state before full suite
+- launchApp:
+    clearState: true
+
+# Run individual test flows
+- runFlow: expo-go-login.yaml
+- runFlow: 01-store-owner-full-flow.yaml
+- runFlow: 02-driver-full-flow.yaml
+- runFlow: 04-login-validation.yaml
+
+# All tests completed!

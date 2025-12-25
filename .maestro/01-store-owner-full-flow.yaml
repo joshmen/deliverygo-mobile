@@ -1,0 +1,89 @@
+appId: host.exp.exponent
+---
+# DeliveryGo - StoreOwner Complete Flow Test
+# Tests: Login → Dashboard → Settings → Profile → Logout
+
+# Launch Expo Go
+- launchApp:
+    clearState: false
+
+# Tap on DeliveryGo project in Expo Go home
+- extendedWaitUntil:
+    visible: "DeliveryGo"
+    timeout: 10000
+
+- tapOn: "DeliveryGo"
+
+# Wait for app to load
+- extendedWaitUntil:
+    visible: "All your favorites"
+    timeout: 60000
+
+# Skip onboarding
+- tapOn: "Skip"
+
+# === LOGIN FLOW ===
+- extendedWaitUntil:
+    visible: "Sign In"
+    timeout: 10000
+
+- tapOn:
+    id: "email-input"
+- inputText: "owner@demo-restaurant.com"
+
+- tapOn:
+    id: "password-input"
+- inputText: "StoreOwner123!"
+
+- tapOn:
+    id: "login-button"
+
+# === VERIFY DASHBOARD ===
+- extendedWaitUntil:
+    visible: "Orders"
+    timeout: 30000
+
+- assertVisible: "Orders"
+- assertVisible: "Settings"
+- assertVisible: "Profile"
+
+# Verify dashboard content
+- assertVisible: "Orders Dashboard"
+- assertVisible: "Pending Orders"
+- assertVisible: "Active Orders"
+
+# === NAVIGATE TO SETTINGS ===
+- tapOn: "Settings"
+
+- extendedWaitUntil:
+    visible: "Store Settings"
+    timeout: 10000
+
+- assertVisible: "Store Settings"
+
+# === NAVIGATE TO PROFILE ===
+- tapOn: "Profile"
+
+- extendedWaitUntil:
+    visible: "Account"
+    timeout: 10000
+
+# Verify profile elements
+- assertVisible: "Profile"
+
+# === LOGOUT ===
+- scrollUntilVisible:
+    element: "Log Out"
+    direction: DOWN
+    timeout: 10000
+
+- tapOn: "Log Out"
+
+# Verify returned to login screen
+- extendedWaitUntil:
+    visible: "Sign In"
+    timeout: 10000
+
+- assertVisible: "Sign In"
+
+# Test completed successfully!

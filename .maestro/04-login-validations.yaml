@@ -1,0 +1,125 @@
+appId: host.exp.exponent
+---
+# DeliveryGo Login Validation Tests
+# Tests form validation and error handling
+
+# Launch Expo Go
+- launchApp:
+    clearState: false
+
+# Dismiss Samsung Pass if visible
+- runFlow:
+    when:
+      visible: "Samsung Pass"
+    commands:
+      - pressKey: back
+
+# Tap on DeliveryGo project if on Expo Go home
+- runFlow:
+    when:
+      visible: "DeliveryGo Express"
+    commands:
+      - tapOn: "DeliveryGo Express"
+
+# Dismiss Samsung Pass again
+- runFlow:
+    when:
+      visible: "Samsung Pass"
+    commands:
+      - pressKey: back
+
+# Wait a moment for app to load
+- swipe:
+    direction: DOWN
+    duration: 500
+
+# Handle logged in state - logout first
+- runFlow:
+    when:
+      visible: "Profile"
+    commands:
+      - tapOn: "Profile"
+      - scrollUntilVisible:
+          element: "Logout"
+          direction: DOWN
+          timeout: 10000
+      - tapOn: "Logout"
+      - extendedWaitUntil:
+          visible: "LOGOUT"
+          timeout: 5000
+      - tapOn: "LOGOUT"
+
+# Skip onboarding if visible (wait for it first)
+- extendedWaitUntil:
+    visible: "Skip"
+    timeout: 30000
+- tapOn: "Skip"
+
+# Wait for login screen
+- extendedWaitUntil:
+    visible: "Sign In"
+    timeout: 15000
+
+# === TEST 1: Empty credentials ===
+- tapOn:
+    id: "login-button"
+- assertVisible: "Please enter both email and password"
+- tapOn: "OK"
+
+# === TEST 2: Email only (no password) ===
+- tapOn:
+    id: "email-input"
+- inputText: "test@example.com"
+- tapOn:
+    id: "login-button"
+- assertVisible: "Please enter both email and password"
+- tapOn: "OK"
+
+# Clear email
+- tapOn:
+    id: "email-input"
+- eraseText: 20
+
+# === TEST 3: Password only (no email) ===
+- tapOn:
+    id: "password-input"
+- inputText: "TestPassword123"
+- tapOn:
+    id: "login-button"
+- assertVisible: "Please enter both email and password"
+- tapOn: "OK"
+
+# Dismiss keyboard
+- pressKey: back
+
+# === TEST 4: Verify Demo Accounts section exists ===
+- assertVisible: "Demo Accounts:"
+- assertVisible: "Store Owner"
+- assertVisible: "Driver"
+- assertVisible: "Customer"
+
+# === TEST 5: Valid login works ===
+# Clear any existing text
+- tapOn:
+    id: "email-input"
+- eraseText: 30
+- inputText: "owner@demo-restaurant.com"
+- tapOn:
+    id: "password-input"
+- eraseText: 30
+- inputText: "StoreOwner123!"
+- tapOn:
+    id: "login-button"
+
+# Dismiss Samsung Pass
+- swipe:
+    direction: DOWN
+    duration: 1500
+- pressKey: back
+
+# Verify successful login
+- extendedWaitUntil:
+    visible: "Orders"
+    timeout: 30000
+
+# All validation tests passed!

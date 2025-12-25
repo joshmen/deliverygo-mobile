@@ -1,0 +1,79 @@
+appId: host.exp.exponent
+---
+# DeliveryGo Customer Login Flow Test (Expo Go)
+
+# Launch Expo Go
+- launchApp:
+    clearState: false
+
+# Dismiss Samsung Pass if visible
+- runFlow:
+    when:
+      visible: "Samsung Pass"
+    commands:
+      - pressKey: back
+
+# Tap on DeliveryGo project if on Expo Go home
+- runFlow:
+    when:
+      visible: "DeliveryGo Express"
+    commands:
+      - tapOn: "DeliveryGo Express"
+
+# Wait for app to load
+- extendedWaitUntil:
+    visible: "Profile"
+    timeout: 60000
+
+# Dismiss Samsung Pass
+- runFlow:
+    when:
+      visible: "Samsung Pass"
+    commands:
+      - pressKey: back
+
+# Go to Profile and logout
+- tapOn: "Profile"
+# Scroll down to find Logout button
+- scrollUntilVisible:
+    element: "Logout"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Logout"
+- extendedWaitUntil:
+    visible: "LOGOUT"
+    timeout: 5000
+- tapOn: "LOGOUT"
+
+# Skip onboarding
+- extendedWaitUntil:
+    visible: "Skip"
+    timeout: 15000
+- tapOn: "Skip"
+
+# Login as Customer
+- extendedWaitUntil:
+    visible: "Sign In"
+    timeout: 15000
+- tapOn:
+    id: "email-input"
+- inputText: "customer@demo-restaurant.com"
+- tapOn:
+    id: "password-input"
+- inputText: "Customer123!"
+- tapOn:
+    id: "login-button"
+
+# Wait and dismiss Samsung Pass
+- swipe:
+    direction: DOWN
+    duration: 1000
+- pressKey: back
+
+# Verify Customer dashboard
+- extendedWaitUntil:
+    visible: "Customer"
+    timeout: 30000
+- assertVisible: "Profile"
+
+# Customer test passed!

@@ -20,17 +20,18 @@ export const TENANT_CODE = getEnvVar("TENANT_CODE", "demo-restaurant");
 // API URLs - Use environment variable or fallback to localhost
 // For device/emulator testing, set EXPO_PUBLIC_BACKEND_IP to your computer's IP
 const getApiUrl = (port: number) => {
-  const host = getEnvVar("BACKEND_IP", "localhost");
+  // Hardcoded for physical device testing - change this to your computer's IP
+  const host = "192.168.100.254";
   // Using HTTP for development to avoid SSL certificate issues on mobile devices
   return `http://${host}:${port}`;
 };
 
-// Service ports (matching Aspire AppHost configuration)
-const AUTH_PORT = 8001;
-const TENANT_CONFIG_PORT = 8002;
-const ORDER_PORT = 8003;
+// Service ports (matching docker-compose configuration)
+const AUTH_PORT = 5000;
+const TENANT_CONFIG_PORT = 5001;
+const ORDER_PORT = 5002;
 
-// API URLs - Using Aspire AppHost ports (8001-8003)
+// API URLs - Using docker-compose ports (5000-5002)
 export const API_BASE_URL = getApiUrl(AUTH_PORT);
 export const API_AUTH_URL = getApiUrl(AUTH_PORT);
 export const API_TENANT_CONFIG_URL = getApiUrl(TENANT_CONFIG_PORT);

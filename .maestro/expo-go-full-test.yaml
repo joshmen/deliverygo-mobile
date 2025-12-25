@@ -1,14 +1,23 @@
-appId: com.deliverygoexpress.app
+appId: host.exp.exponent
 ---
-# DeliveryGo Login Flow Test
+# DeliveryGo - Full E2E Test with Expo Go
+# Prerequisites: Metro bundler running with tunnel
 
+# Launch Expo Go
 - launchApp:
-    clearState: true
+    clearState: false
 
-# Wait for onboarding screen
+# Wait for Expo Go home and tap recent project
+- extendedWaitUntil:
+    visible: "DeliveryGo"
+    timeout: 10000
+
+- tapOn: "DeliveryGo"
+
+# Wait for app to fully load (onboarding screen)
 - extendedWaitUntil:
     visible: "All your favorites"
-    timeout: 30000
+    timeout: 60000
 
 # Skip onboarding
 - tapOn: "Skip"
@@ -18,13 +27,7 @@ appId: com.deliverygoexpress.app
     visible: "Sign In"
     timeout: 10000
 
-# Test empty credentials validation
-- tapOn:
-    id: "login-button"
-- assertVisible: "Please enter both email and password"
-- tapOn: "OK"
-
-# Enter valid store owner credentials
+# Enter credentials
 - tapOn:
     id: "email-input"
 - inputText: "owner@demo-restaurant.com"
@@ -37,11 +40,12 @@ appId: com.deliverygoexpress.app
 - tapOn:
     id: "login-button"
 
-# Wait for navigation to store owner home screen (longer timeout for API call)
+# Wait for dashboard
 - extendedWaitUntil:
     visible: "Orders"
     timeout: 30000
 
+# Verify dashboard
 - assertVisible: "Orders"
 - assertVisible: "Settings"
 - assertVisible: "Profile"

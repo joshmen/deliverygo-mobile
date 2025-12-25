@@ -1,0 +1,71 @@
+appId: host.exp.exponent
+---
+# DeliveryGo - Driver Complete Flow Test
+# Tests: Login → Deliveries → History → Profile → Logout
+
+# Launch Expo Go
+- launchApp:
+    clearState: false
+
+# Wait for app to load (may be on login screen or onboarding)
+- extendedWaitUntil:
+    visible: "Sign In"
+    timeout: 60000
+
+# === LOGIN AS DRIVER ===
+- tapOn:
+    id: "email-input"
+- inputText: "driver@demo-restaurant.com"
+
+- tapOn:
+    id: "password-input"
+- inputText: "Driver123!"
+
+- tapOn:
+    id: "login-button"
+
+# === VERIFY DRIVER HOME SCREEN ===
+- extendedWaitUntil:
+    visible: "Deliveries"
+    timeout: 30000
+
+# Verify bottom navigation tabs
+- assertVisible: "Deliveries"
+- assertVisible: "History"
+- assertVisible: "Profile"
+
+# === CHECK DELIVERIES SCREEN ===
+- assertVisible: "Available Deliveries"
+
+# === NAVIGATE TO HISTORY ===
+- tapOn: "History"
+
+- extendedWaitUntil:
+    visible: "Delivery History"
+    timeout: 10000
+
+- assertVisible: "Delivery History"
+
+# === NAVIGATE TO PROFILE ===
+- tapOn: "Profile"
+
+- extendedWaitUntil:
+    visible: "Account"
+    timeout: 10000
+
+# === LOGOUT ===
+- scrollUntilVisible:
+    element: "Log Out"
+    direction: DOWN
+    timeout: 10000
+
+- tapOn: "Log Out"
+
+# Verify returned to login screen
+- extendedWaitUntil:
+    visible: "Sign In"
+    timeout: 10000
+
+- assertVisible: "Sign In"
+
+# Test completed successfully!
